@@ -1,14 +1,13 @@
 import 'dotenv/config'
-import * as ip from 'ip'
-import { configapp } from './infrastructure/config/server-config'
+import { configApp } from 'src/shared/config/server-config'
 
 async function bootstrap() {
   const { PORT_SERVER } = process.env
 
-  const app = await configapp()
+  const app = await configApp()
 
-  await app.listen(PORT_SERVER, () => {
-    console.log(`Server running in: http://${ip.address()}:${PORT_SERVER}`)
+  await app.listen(PORT_SERVER, '0.0.0.0', () => {
+    console.log(`Server running in: http://0.0.0.0:${PORT_SERVER}`)
   })
 }
 
