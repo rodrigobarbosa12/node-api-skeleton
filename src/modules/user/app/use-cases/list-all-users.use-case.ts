@@ -1,9 +1,9 @@
-import { Inject, Injectable } from '@nestjs/common'
-import { UserDto } from 'src/modules/auth/applications/dtos/user.dto'
+import { Inject, Injectable } from "@nestjs/common";
+import { UserDto } from "src/modules/user/app/dtos/user.dto";
 import {
   UserRepositoryPort,
   UserRepositoryPortToken,
-} from 'src/modules/auth/infra/persistence/repositories/ports/user-repository.port'
+} from "src/modules/user/infra/persistence/repositories/ports/user-repository.port";
 
 @Injectable()
 export class ListAllUsersUseCase {
@@ -13,7 +13,7 @@ export class ListAllUsersUseCase {
   ) {}
 
   async execute(): Promise<UserDto[]> {
-    const usersSchema = await this.userRepositoryPort.findAll()
+    const usersSchema = await this.userRepositoryPort.findAll();
 
     return usersSchema.map(
       (user) =>
@@ -22,6 +22,6 @@ export class ListAllUsersUseCase {
           email: user.email,
           active: user.active,
         }),
-    )
+    );
   }
 }

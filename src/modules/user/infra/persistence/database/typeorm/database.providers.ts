@@ -1,5 +1,5 @@
 import 'dotenv/config'
-import * as path from 'path'
+import * as path from 'node:path'
 import 'reflect-metadata'
 import { DataSource } from 'typeorm'
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies'
@@ -14,14 +14,13 @@ const dataSource = new DataSource({
   password: PASSWORD_DB,
   database: DATABASE_DB,
   logging: false,
-  entities: [path.join(__dirname, 'entity/*.js')],
-  migrations: [path.join(__dirname, 'migrations/*.js')],
+  entities: [path.join(__dirname, 'schemas/*.js')],
   subscribers: [],
   namingStrategy: new SnakeNamingStrategy(),
 })
 
-export const databaseProviders = [
-  {
+export const databaseProviders = {
+  pg: {
     provide: 'DATA_SOURCE',
     useFactory: async () => {
       const typeormInit = await dataSource.initialize()
@@ -29,6 +28,6 @@ export const databaseProviders = [
       return typeormInit
     },
   },
-]
+}
 
 export default dataSource
